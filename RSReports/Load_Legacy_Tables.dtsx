@@ -1,0 +1,275 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/22/2016 3:57:53 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="SHPDEV120"
+  DTS:CreatorName="NRUCFC\kletnon"
+  DTS:DTSID="{22A2C8D8-9EFF-4BA7-8183-30DDC9AF0CAD}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="12.0.2430.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Load_Legacy_Tables"
+  DTS:PackageType="5"
+  DTS:VersionBuild="37"
+  DTS:VersionGUID="{28EE1A12-5B4E-41A5-962B-33BDEAC53095}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DEV]"
+      DTS:CreationName="ADO.NET:System.Data.SqlClient.SqlConnection, System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089"
+      DTS:DTSID="{8B5E7EA4-E1E5-4E3F-8C53-AB35B08C9A9C}"
+      DTS:ObjectName="DEV">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=SQLDEV101\LOP_DBSVR;Initial Catalog=CFC_DWA_LOP_STAGING_SRCUAT_old;Integrated Security=True;Application Name=SSIS-Load_Legacy_Tables-{8B5E7EA4-E1E5-4E3F-8C53-AB35B08C9A9C}SQLDEV101\LOP_DBSVR.CFC_DWA_LOP_STAGING_SRCUAT_old;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{F6396B24-FAF9-42D4-8B02-84D9CA3BD147}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Load_Type">
+      <DTS:VariableValue
+        DTS:DataType="8">F</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2FF010E3-5A6C-441A-8424-2D2CB32B205A}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="Subject_Area">
+      <DTS:VariableValue
+        DTS:DataType="8">LEGACY</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{09524165-E0B9-4734-AAC3-C15398E827E2}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="Task_Count">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\AuditLegacyLoad"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{466B8E93-4E22-40D7-BDD0-9320836DC1F9}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="AuditLegacyLoad"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8B5E7EA4-E1E5-4E3F-8C53-AB35B08C9A9C}"
+          SQLTask:IsStoredProc="True"
+          SQLTask:SqlStatementSource="[etl].[uspAUDIT]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@SUBJECT_AREA"
+            SQLTask:DtsVariableName="User::Subject_Area"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="16"
+            SQLTask:ParameterSize="100" />
+          <SQLTask:ParameterBinding
+            SQLTask:ParameterName="@TASK_NUMBER"
+            SQLTask:DtsVariableName="User::Task_Count"
+            SQLTask:ParameterDirection="Input"
+            SQLTask:DataType="11"
+            SQLTask:ParameterSize="-1" />
+        </SQLTask:SqlTaskData>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute Legacy Load"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{89150D1A-686E-4055-BAA0-26C155070045}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute Legacy Load">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Execute Legacy Load\Load Facility_EPB"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{94AC872C-7587-4201-B5D0-F5D622B34773}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Load Facility_EPB"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{8B5E7EA4-E1E5-4E3F-8C53-AB35B08C9A9C}"
+              SQLTask:IsStoredProc="True"
+              SQLTask:SqlStatementSource="[etl].[uspFACILITY_EPB_LOAD]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask">
+              <SQLTask:ParameterBinding
+                SQLTask:ParameterName="@DW_STATUS_IND"
+                SQLTask:DtsVariableName="User::Load_Type"
+                SQLTask:ParameterDirection="Input"
+                SQLTask:DataType="16"
+                SQLTask:ParameterSize="1" />
+            </SQLTask:SqlTaskData>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PrepLoad"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{418379C1-AEB7-48B6-A9D0-0D9E72302A96}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PrepLoad"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2014; © 2014 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{8B5E7EA4-E1E5-4E3F-8C53-AB35B08C9A9C}"
+          SQLTask:IsStoredProc="True"
+          SQLTask:SqlStatementSource="etl.uspMSRT_CNTRL" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{7A9E15BC-D1C4-402C-B0C6-DA8690DC92A6}"
+      DTS:From="Package\PrepLoad"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Execute Legacy Load" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{9E87ACA0-A564-4B68-BCBF-36FE82EE9835}"
+      DTS:From="Package\Execute Legacy Load"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\AuditLegacyLoad" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="sql12">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="123,42"
+          Id="Package\PrepLoad"
+          TopLeft="210,76" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Execute Legacy Load\Load Facility_EPB"
+          TopLeft="97,24" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="False"
+          PanelSize="319,125"
+          Size="319,43"
+          Id="Package\Execute Legacy Load"
+          TopLeft="710,66" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="333,97">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="377,-9.5"
+              Start="0,0"
+              End="369.5,-9.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="184.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="184.5,0"
+                    Point2="188.5,0"
+                    Point3="188.5,-4" />
+                  <mssgle:LineSegment
+                    End="188.5,-5.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="188.5,-5.5"
+                    Point2="188.5,-9.5"
+                    Point3="192.5,-9.5" />
+                  <mssgle:LineSegment
+                    End="369.5,-9.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="158,42"
+          Id="Package\AuditLegacyLoad"
+          TopLeft="781,396" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="869.5,109">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9.5,287"
+              Start="0,0"
+              End="-9.5,279.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,139.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,139.5"
+                    Point2="0,143.5"
+                    Point3="-4,143.5" />
+                  <mssgle:LineSegment
+                    End="-5.5,143.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5.5,143.5"
+                    Point2="-9.5,143.5"
+                    Point3="-9.5,147.5" />
+                  <mssgle:LineSegment
+                    End="-9.5,279.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="This is a Template for a full  Subject area load:&#xD;&#xA;&#xD;&#xA;1. PrepLoad: assembles a Master &#xD;&#xA;    Manifest Control table and populates&#xD;&#xA;    it according to certain rules and restrictions;&#xD;&#xA;&#xD;&#xA;2. Execute Legacy Load: is a sequence container&#xD;&#xA;    that encapsulates a series of tasks ( in this particular example&#xD;&#xA;    one task that actually comprise a load for a subject area);&#xD;&#xA;&#xD;&#xA;3. AuditLegacyLoad: is the task that logs the load to an achive&#xD;&#xA;   and produces a valid Batch_ID for the enitre load if certain &#xD;&#xA;   conditions are met which in this case are:&#xD;&#xA;               - zero error messages in the log table for the load;&#xD;&#xA;               - count of tasks matches the designated number of &#xD;&#xA;                  tasks for this subject area; "
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="369,279"
+          Id="e5e59aa7-5024-4c44-bd76-d2c527c33ac0"
+          TopLeft="348,159" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

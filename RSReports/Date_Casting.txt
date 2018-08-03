@@ -1,0 +1,1 @@
+, casT(cast([EFFECTIVE_DATE_KEY] AS varchaR(8)) as date)
